@@ -1,0 +1,14 @@
+.notes {
+  text-align: center;
+  width: 80%;
+  float: right;
+}
+
+.NotesList {
+  list-style: none;
+}
+
+.note {
+  border: 5px solid orangered;
+  margin-bottom: 5px;
+}

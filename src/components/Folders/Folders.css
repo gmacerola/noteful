@@ -1,0 +1,15 @@
+.folders {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  left: 0;
+}
+
+li {
+  height: 50px;
+  width: 100px;
+}
+
+.active {
+  background-color: palegreen;
+}
