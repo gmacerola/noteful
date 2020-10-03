@@ -5,9 +5,12 @@
   left: 0;
 }
 
+ul {
+  list-style: none;
+}
+
 li {
-  height: 50px;
-  width: 100px;
+  margin-bottom: 5px;
 }
 
 .active {

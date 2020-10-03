@@ -1,82 +1,69 @@
-import React, { Component } from "react";
+import React from "react";
 import { Route, Link } from "react-router-dom";
+import NotefulContext from "./NotefulContext";
 import "./App.css";
-import STORE from "./dummy-store";
+import HomePage from "./components/HomePage/HomePage";
+import FolderPage from "./components/FolderPage/FolderPage";
+import NotePage from "./components/NotePage/NotePage";
 
-import Folders from "./components/Folders/Folders";
-import Notes from "./components/Notes/Notes";
-import Main from "./components/Main/Main";
-
-class App extends Component {
+export default class App extends React.Component {
   state = {
-    ...STORE,
+    notes: [],
+    folders: [],
+    FolderContent: [],
+    // deleteNote: (id) => {
+    //   let newNotes = this.state.notes.filter(id !== e.target.value);
+    //   this.setState({ notes: newNotes });
+    // },
     error: null,
   };
 
+  componentDidMount() {
+    fetch("http://localhost:9090/folders", {
+      method: "GET",
+      headers: { "content-type": "application/json" },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .then((folders) => this.setState({ folders }))
+      .catch((error) => this.setState({ error }));
+    fetch("http://localhost:9090/notes", {
+      method: "GET",
+      headers: { "content-type": "application/json" },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .then((notes) => this.setState({ notes }))
+      .catch((error) => this.setState({ error }));
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="Header">
-          <Link to="/">
-            <h1>Noteful</h1>
-          </Link>
-        </header>
-
-        <main className="content">
-          <Route
-            exact
-            path="/"
-            render={(rprops) => (
-              <Main
-                {...rprops}
-                folders={this.state.folders}
-                notes={this.state.notes}
-              />
-            )}
-          />
-          <Route
-            path="/folder/:folderid"
-            render={(rprops) => (
-              <div>
-                <Folders {...rprops} folders={this.state.folders} />
-                <Notes
-                  {...rprops}
-                  notes={
-                    rprops.match.params.folderid
-                      ? this.state.notes.filter(
-                          (n) => n.folderId === rprops.match.params.folderid
-                        )
-                      : this.state.notes
-                  }
-                />
-              </div>
-            )}
-          />
-          <Route
-            path="note/:noteid"
-            render={(rprops) => (
-              <div>
-                <Folders {...rprops} folders={this.state.folders} />
-                <Notes
-                  {...rprops}
-                  notes={
-                    rprops.match.params.noteid
-                      ? this.state.notes.filter(
-                          (n) => n.noteid === rprops.match.params.noteid
-                        )
-                      : this.state.notes
-                  }
-                />
-              </div>
-            )}
-          />
-        </main>
-      </div>
+      <NotefulContext.Provider value={this.state}>
+        <div className="App2">
+          <header className="Header">
+            <Link to="/">
+              <h1>Noteful</h1>
+            </Link>
+          </header>
+          <main>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/folder/:folderid" component={FolderPage} />
+            <Route path="/note/:noteid" component={NotePage} />
+          </main>
+        </div>
+      </NotefulContext.Provider>
     );
   }
 }
-
-export default App;
 
 /**
  * index -> import App -> render to the DOM
@@ -87,6 +74,3 @@ export default App;
  * CreateFolder -> form for creating new folders
  * CreateNote -> form for creating new notes
  */
-
-/*<Route
-            path="/folder/:folderid"*/
