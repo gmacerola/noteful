@@ -7,19 +7,26 @@ export default class NotesList extends React.Component {
   static contextType = NotefulContext;
   render() {
     return (
-      <section className="notes">
-        <p>Notes</p>
-        <ul className="NotesList">
-          {this.context.notes.map((note) => (
-            <div className="note">
-              <li key={note.id}>
-                <Link to={{ pathname: `/note/${note.id}` }}>{note.name} </Link>
-              </li>
-              <p>{note.modified}</p>
-            </div>
-          ))}
-        </ul>
-      </section>
+      <div>
+        <section className="notes">
+          <p>Notes</p>
+          <ul className="NotesList">
+            {this.context.notes.map((note) => (
+              <div key={note.id} className="note">
+                <li>
+                  <Link to={{ pathname: `/note/${note.id}` }}>
+                    {note.name}{" "}
+                  </Link>
+                </li>
+                <p>{note.modified}</p>
+              </div>
+            ))}
+          </ul>
+        </section>
+        <Link to="/createnote">
+          <button className="createNote">Create Note</button>
+        </Link>
+      </div>
     );
   }
 }

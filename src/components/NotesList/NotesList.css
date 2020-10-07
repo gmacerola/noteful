@@ -12,3 +12,12 @@
   border: 5px solid orangered;
   margin-bottom: 5px;
 }
+
+.createNote {
+  text-align: center;
+  width: 50%;
+  float: right;
+  position: relative;
+  top: 20px;
+  bottom: 20px;
+}

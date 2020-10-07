@@ -7,7 +7,7 @@ export default class FolderNotes extends React.Component {
 
   render() {
     const notes = this.context.notes.filter(
-      (note) => note.id === this.props.noteid
+      (note) => note.id === this.props.match.params.noteid
     );
     console.log(notes);
     return (
