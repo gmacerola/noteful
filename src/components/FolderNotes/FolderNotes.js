@@ -7,10 +7,11 @@ export default class FolderNotes extends React.Component {
   static contextType = NotefulContext;
 
   render() {
-    console.log(this.props);
+    console.log(this.props.folderid);
     const filteredNotes = this.context.notes.filter(
       (note) => note.folderId === this.props.folderid
     );
+    console.log(this.props, filteredNotes);
     return (
       <div className="FoldersNotes">
         <p>Notes</p>
@@ -24,6 +25,9 @@ export default class FolderNotes extends React.Component {
             </div>
           ))}
         </ul>
+        <Link to="/createnote">
+          <button className="createNote">Create Note</button>
+        </Link>
       </div>
     );
   }

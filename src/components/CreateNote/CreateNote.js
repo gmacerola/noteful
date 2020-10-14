@@ -31,6 +31,7 @@ export default class CreateNote extends React.Component {
               this.context.setNewNoteFolderId(g, this.context.newNote)
             }
           >
+            <option value="None">Select</option>
             {this.context.folders.map((folder) => (
               <option value={folder.id}>{folder.name}</option>
             ))}

@@ -24,6 +24,9 @@ export default class FolderNotes extends React.Component {
             </div>
           ))}
         </ul>
+        <Link to="/createnote">
+          <button className="createNote">Create Note</button>
+        </Link>
       </div>
     );
   }

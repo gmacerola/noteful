@@ -15,9 +15,6 @@
 
 .createNote {
   text-align: center;
-  width: 50%;
+  width: 80%;
   float: right;
-  position: relative;
-  top: 20px;
-  bottom: 20px;
 }

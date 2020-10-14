@@ -37,6 +37,7 @@ export default class App2 extends React.Component {
       name: "",
       content: "",
       folderId: "",
+      modified: "",
     },
     // setNewNote: (e, f, g) =>
     //   this.setState({
@@ -52,25 +53,46 @@ export default class App2 extends React.Component {
       this.setState({ newNote: { ...oldNote, content: f.target.value } }),
     setNewNoteFolderId: (g, oldNote) =>
       this.setState({ newNote: { ...oldNote, folderId: g.target.value } }),
+    // setModified: (e, oldNote) => {
+    //   e.preventDefault();
+    //   const curTime = new Date();
+    //   console.log(curTime);
+    //   this.setState({ newNote: { ...oldNote, modified: curTime } });
+    // },
     createNote: (e) => {
       e.preventDefault();
-      const newNote = {
-        name: this.state.newNote.name,
-        content: this.state.newNote.content,
-        folderId: this.state.newNote.folderId,
-      };
-      fetch("http://localhost:9090/notes", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(newNote),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          this.setState({
-            notes: [...this.state.notes, newNote],
-            newNote: [{ name: "" }, { content: "" }, { folderId: "" }],
+      const curTime = new Date();
+      console.log(curTime);
+      this.setState({ newNote: { modified: { curTime } } });
+      const name = this.state.newNote.name;
+      if (name.length === 0) {
+        console.log("testing");
+        return alert("💥 Name Required! 💥");
+      } else {
+        const newNote = {
+          name: this.state.newNote.name,
+          content: this.state.newNote.content,
+          folderId: this.state.newNote.folderId,
+          modified: this.state.newNote.modified,
+        };
+        fetch("http://localhost:9090/notes", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(newNote),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            this.setState({
+              notes: [...this.state.notes, newNote],
+              newNote: [
+                { name: "" },
+                { content: "" },
+                { folderId: "" },
+                { modified: "" },
+              ],
+            });
           });
-        });
+      }
     },
     error: null,
   };

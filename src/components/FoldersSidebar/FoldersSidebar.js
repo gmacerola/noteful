@@ -19,8 +19,8 @@ export default class FoldersSidebar extends React.Component {
             </li>
           ))}
 
-          <Link path="/">
-            <button onClick="/">Home</button>
+          <Link to="/">
+            <button>Home</button>
           </Link>
         </ul>
         <CreateFolder />
