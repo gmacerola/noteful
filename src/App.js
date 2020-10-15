@@ -65,9 +65,9 @@ export default class App2 extends React.Component {
       console.log(curTime);
       this.setState({ newNote: { modified: { curTime } } });
       const name = this.state.newNote.name;
-      if (name.length === 0) {
+      if (!name) {
         console.log("testing");
-        return alert("💥 Name Required! 💥");
+        alert("💥 Name Required! 💥");
       } else {
         const newNote = {
           name: this.state.newNote.name,
