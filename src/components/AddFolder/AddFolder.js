@@ -13,8 +13,10 @@ export default class AddFolder extends React.Component {
           value={this.context.newFolder}
           placeholder="New Folder"
           onChange={(e) => this.context.setNewFolder(e)}
+          aria-required="true"
+          aria-label="New Folder"
         />
-        <input type="submit" value="Add" />
+        <input type="submit" value="Add" aria-label="Add" />
       </form>
     );
   }

@@ -20,6 +20,7 @@ export default class CreateNote extends React.Component {
             onChange={(e) =>
               this.context.setNewNoteName(e, this.context.newNote)
             }
+            aria-label="Note Name"
           />
           <input
             type="text"
@@ -28,12 +29,14 @@ export default class CreateNote extends React.Component {
             onChange={(f) =>
               this.context.setNewNoteContent(f, this.context.newNote)
             }
+            aria-label="Note Content"
           />
           <select
             value={this.context.newNote.folderId}
             onChange={(g) =>
               this.context.setNewNoteFolderId(g, this.context.newNote)
             }
+            aria-label="Select Folder"
           >
             <option value="None">Select</option>
             {this.context.folders.map((folder) => (
@@ -42,7 +45,7 @@ export default class CreateNote extends React.Component {
               </option>
             ))}
           </select>
-          <input type="submit" value="Add" />
+          <input type="submit" value="Add" aria-label="Add Note" />
         </form>
       </div>
     );

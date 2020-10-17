@@ -47,7 +47,7 @@ export default class App2 extends React.Component {
             });
           })
           .catch((error) => {
-            console.log(error);
+            this.state.setError(error);
           });
       }
     },
@@ -106,7 +106,7 @@ export default class App2 extends React.Component {
             );
           })
           .catch((error) => {
-            console.log(error);
+            this.state.setError(error);
           });
       }
     },
@@ -158,7 +158,11 @@ export default class App2 extends React.Component {
           <main>
             <ErrorPage>
               {this.state.error && (
-                <p className="error-message">{this.state.error}</p>
+                <p className="error-message">
+                  {typeof this.state.error === "string"
+                    ? this.state.error
+                    : "Something went wrong"}
+                </p>
               )}
               <Route exact path="/" component={NotesList} />
               <Route path="/" component={FoldersSidebar} />

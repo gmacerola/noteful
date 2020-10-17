@@ -2,6 +2,11 @@ h1 {
   text-align: center;
 }
 
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
 .error-message {
   text-align: center;
   padding: 20px;

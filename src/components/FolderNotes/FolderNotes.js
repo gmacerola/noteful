@@ -24,12 +24,10 @@ export default class FolderNotes extends React.Component {
         <p>Notes</p>
         <ul className="NotesList">
           {filteredNotes.map((note) => (
-            <div key={note.id} className="note">
-              <li key={note.id}>
-                <Link to={{ pathname: `/note/${note.id}` }}>{note.name} </Link>
-              </li>
+            <li key={note.id} className="note">
+              <Link to={{ pathname: `/note/${note.id}` }}>{note.name} </Link>
               <p>{Date(note.modified).toLocaleString()}</p>
-            </div>
+            </li>
           ))}
         </ul>
         <Link to="/createnote">

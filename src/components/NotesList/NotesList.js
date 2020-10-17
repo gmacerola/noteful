@@ -12,14 +12,10 @@ export default class NotesList extends React.Component {
           <p>Notes</p>
           <ul className="NotesList">
             {this.context.notes.map((note) => (
-              <div key={note.id} className="note">
-                <li>
-                  <Link to={{ pathname: `/note/${note.id}` }}>
-                    {note.name}{" "}
-                  </Link>
-                </li>
+              <li key={note.id} className="note">
+                <Link to={{ pathname: `/note/${note.id}` }}>{note.name} </Link>
                 <p>{Date(note.modified).toLocaleString()}</p>
-              </div>
+              </li>
             ))}
           </ul>
         </section>

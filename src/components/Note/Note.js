@@ -21,13 +21,11 @@ export default class FolderNotes extends React.Component {
         <p>Notes</p>
         <ul className="NotesList">
           {notes.map((note) => (
-            <div className="note">
-              <li key={note.id}>
-                <Link to={{ pathname: `/note/${note.id}` }}>{note.name} </Link>
-              </li>
+            <li key={note.id} className="note">
+              <Link to={{ pathname: `/note/${note.id}` }}>{note.name} </Link>
               <p>{Date(note.modified).toLocaleString()}</p>
               <p>{note.content}</p>
-            </div>
+            </li>
           ))}
         </ul>
       </div>
