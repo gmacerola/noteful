@@ -1,3 +1,10 @@
 h1 {
   text-align: center;
 }
+
+.error-message {
+  text-align: center;
+  padding: 20px;
+  background-color: lightcoral;
+  border: 5px solid red;
+}

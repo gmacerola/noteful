@@ -8,30 +8,48 @@ import Note from "./components/Note/Note";
 import FoldersSidebar from "./components/FoldersSidebar/FoldersSidebar";
 import CreateNote from "./components/CreateNote/CreateNote";
 
+import ErrorPage from "./ErrorBoundary";
+import AddFolder from "./components/AddFolder/AddFolder";
+
 export default class App2 extends React.Component {
   state = {
     notes: [],
     folders: [],
     newFolder: "",
     setNewFolder: (e) => this.setState({ newFolder: e.target.value }),
-    createFolder: (e) => {
+    addFolder: (e) => {
       e.preventDefault();
-      const newFolder = {
-        id: String(this.state.folders.length),
-        name: this.state.newFolder,
-      };
-      fetch("http://localhost:9090/folders", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(newFolder),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          this.setState({
-            folders: [...this.state.folders, newFolder],
-            newFolder: "",
+      if (this.state.newFolder === "") {
+        this.state.setError("💥 Folder Name Required! 💥");
+      } else {
+        this.state.setError(null);
+        const newFolder = {
+          id: String(this.state.folders.length),
+          name: this.state.newFolder,
+        };
+        fetch("http://localhost:9090/folders", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(newFolder),
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              throw new Error("Something went wrong");
+            }
+          })
+          // .then((res) => res.json())
+          .then((res) => {
+            this.setState({
+              folders: [...this.state.folders, newFolder],
+              newFolder: "",
+            });
+          })
+          .catch((error) => {
+            console.log(error);
           });
-        });
+      }
     },
     newNote: {
       name: "",
@@ -39,62 +57,61 @@ export default class App2 extends React.Component {
       folderId: "",
       modified: "",
     },
-    // setNewNote: (e, f, g) =>
-    //   this.setState({
-    //     newNote: {
-    //       name: e.target.value,
-    //       content: f.target.value,
-    //       folderId: g.target.value
-    //     }
-    //   }),
     setNewNoteName: (e, oldNote) =>
       this.setState({ newNote: { ...oldNote, name: e.target.value } }),
     setNewNoteContent: (f, oldNote) =>
       this.setState({ newNote: { ...oldNote, content: f.target.value } }),
     setNewNoteFolderId: (g, oldNote) =>
       this.setState({ newNote: { ...oldNote, folderId: g.target.value } }),
-    // setModified: (e, oldNote) => {
-    //   e.preventDefault();
-    //   const curTime = new Date();
-    //   console.log(curTime);
-    //   this.setState({ newNote: { ...oldNote, modified: curTime } });
-    // },
-    createNote: (e) => {
+    createNote: (e, history) => {
       e.preventDefault();
-      const curTime = new Date();
-      console.log(curTime);
-      this.setState({ newNote: { modified: { curTime } } });
-      const name = this.state.newNote.name;
-      if (!name) {
-        console.log("testing");
-        alert("💥 Name Required! 💥");
+      if (
+        this.state.newNote.name === "" ||
+        this.state.newNote.content === "" ||
+        this.state.newNote.folderId === ""
+      ) {
+        this.state.setError("💥 Name, Content, Folder Required! 💥");
       } else {
+        this.state.setError(null);
         const newNote = {
           name: this.state.newNote.name,
           content: this.state.newNote.content,
           folderId: this.state.newNote.folderId,
-          modified: this.state.newNote.modified,
+          modified: new Date(),
         };
         fetch("http://localhost:9090/notes", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(newNote),
         })
-          .then((res) => res.json())
           .then((res) => {
-            this.setState({
-              notes: [...this.state.notes, newNote],
-              newNote: [
-                { name: "" },
-                { content: "" },
-                { folderId: "" },
-                { modified: "" },
-              ],
-            });
+            if (res.ok) {
+              return res.json();
+            } else {
+              throw new Error("Something went wrong");
+            }
+          })
+          .then((res) => {
+            this.setState(
+              {
+                notes: [...this.state.notes, res],
+                newNote: {
+                  name: "",
+                  content: "",
+                  folderId: "",
+                  modified: "",
+                },
+              },
+              () => history.push("/")
+            );
+          })
+          .catch((error) => {
+            console.log(error);
           });
       }
     },
     error: null,
+    setError: (error) => this.setState({ error }),
   };
 
   // deleteNote: (id) => {
@@ -139,11 +156,17 @@ export default class App2 extends React.Component {
             </Link>
           </header>
           <main>
-            <Route exact path="/" component={NotesList} />
-            <Route path="/" component={FoldersSidebar} />
-            <Route path="/folder/:folderid" component={FolderPage} />
-            <Route path="/note/:noteid" component={Note} />
-            <Route path="/createnote" component={CreateNote} />
+            <ErrorPage>
+              {this.state.error && (
+                <p className="error-message">{this.state.error}</p>
+              )}
+              <Route exact path="/" component={NotesList} />
+              <Route path="/" component={FoldersSidebar} />
+              <Route path="/folder/:folderid" component={FolderPage} />
+              <Route path="/note/:noteid" component={Note} />
+              <Route path="/createnote" component={CreateNote} />
+              <Route path="/addfolder" component={AddFolder} />
+            </ErrorPage>
           </main>
         </div>
       </NotefulContext.Provider>

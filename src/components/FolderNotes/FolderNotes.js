@@ -2,9 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import NotefulContext from "../../NotefulContext";
 import "./FolderNotes.css";
+import PropTypes from "prop-types";
 
 export default class FolderNotes extends React.Component {
   static contextType = NotefulContext;
+  static defaultProps = {
+    folderid: "0",
+  };
+  static propTypes = {
+    folderid: PropTypes.string.isRequired,
+  };
 
   render() {
     console.log(this.props.folderid);
@@ -17,11 +24,11 @@ export default class FolderNotes extends React.Component {
         <p>Notes</p>
         <ul className="NotesList">
           {filteredNotes.map((note) => (
-            <div className="note">
+            <div key={note.id} className="note">
               <li key={note.id}>
                 <Link to={{ pathname: `/note/${note.id}` }}>{note.name} </Link>
               </li>
-              <p>{note.modified}</p>
+              <p>{Date(note.modified).toLocaleString()}</p>
             </div>
           ))}
         </ul>

@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import NotefulContext from "../../NotefulContext";
-import CreateFolder from "../CreateFolder/CreateFolder";
 import "./FoldersSidebar.css";
 
 export default class FoldersSidebar extends React.Component {
@@ -18,12 +17,13 @@ export default class FoldersSidebar extends React.Component {
               </NavLink>
             </li>
           ))}
-
           <Link to="/">
             <button>Home</button>
           </Link>
         </ul>
-        <CreateFolder />
+        <Link to="/addfolder">
+          <button>Add Folder</button>
+        </Link>
       </section>
     );
   }

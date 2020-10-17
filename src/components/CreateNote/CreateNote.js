@@ -8,7 +8,11 @@ export default class CreateNote extends React.Component {
   render() {
     return (
       <div className="createNoteForm">
-        <form onSubmit={(e) => this.context.createNote(e)}>
+        <form
+          onSubmit={(e) => {
+            this.context.createNote(e, this.props.history);
+          }}
+        >
           <input
             type="text"
             value={this.context.newNote.name}
@@ -33,7 +37,9 @@ export default class CreateNote extends React.Component {
           >
             <option value="None">Select</option>
             {this.context.folders.map((folder) => (
-              <option value={folder.id}>{folder.name}</option>
+              <option key={folder.id} value={folder.id}>
+                {folder.name}
+              </option>
             ))}
           </select>
           <input type="submit" value="Add" />

@@ -1,12 +1,13 @@
 import React from "react";
+import "./AddFolder.css";
 
 import NotefulContext from "../../NotefulContext";
 
-export default class CreateFolder extends React.Component {
+export default class AddFolder extends React.Component {
   static contextType = NotefulContext;
   render() {
     return (
-      <form onSubmit={(e) => this.context.createFolder(e)}>
+      <form className="addFolder" onSubmit={(e) => this.context.addFolder(e)}>
         <input
           type="text"
           value={this.context.newFolder}

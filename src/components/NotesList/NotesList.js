@@ -18,7 +18,7 @@ export default class NotesList extends React.Component {
                     {note.name}{" "}
                   </Link>
                 </li>
-                <p>{note.modified}</p>
+                <p>{Date(note.modified).toLocaleString()}</p>
               </div>
             ))}
           </ul>
