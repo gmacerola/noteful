@@ -6,7 +6,7 @@ import NotesList from "./components/NotesList/NotesList";
 import FolderPage from "./components/FolderPage/FolderPage";
 import Note from "./components/Note/Note";
 import FoldersSidebar from "./components/FoldersSidebar/FoldersSidebar";
-import CreateNote from "./components/CreateNote/CreateNote";
+import AddNote from "./components/AddNote/AddNote";
 
 import ErrorPage from "./ErrorBoundary";
 import AddFolder from "./components/AddFolder/AddFolder";
@@ -168,7 +168,7 @@ export default class App2 extends React.Component {
               <Route path="/" component={FoldersSidebar} />
               <Route path="/folder/:folderid" component={FolderPage} />
               <Route path="/note/:noteid" component={Note} />
-              <Route path="/createnote" component={CreateNote} />
+              <Route path="/addnote" component={AddNote} />
               <Route path="/addfolder" component={AddFolder} />
             </ErrorPage>
           </main>

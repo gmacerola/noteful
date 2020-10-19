@@ -1,9 +1,9 @@
 import React from "react";
-import "./CreateNote.css";
+import "./AddNote.css";
 
 import NotefulContext from "../../NotefulContext";
 
-export default class CreateNote extends React.Component {
+export default class AddNote extends React.Component {
   static contextType = NotefulContext;
   render() {
     return (
